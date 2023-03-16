@@ -1,0 +1,30 @@
+{
+    "data": {
+      "user": {
+        "id": "b3c2c92e-d650-4c40-bb7d-aeb3423cd4d2",
+        "reference_id": "john.doe.198",
+        "created_time": "2019-07-29T14:51:56.933Z",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john.doe@gmail.com",
+        "phone": "9876543212",
+        "avatar": {
+          "url": "https://s3.amazonaws.com/fresh-chat-names/img/john_doe.png"
+        },
+        "properties": [
+          {
+            "name": "plan",
+            "value": "Estate"
+          }
+        ]
+      },
+      "actor": {},
+      "associations": {}
+    },
+    "region": "US",
+    "account_id": "227655214724132",
+    "domain": "web.freshchat.com",
+    "event": "onUserCreate",
+    "timestamp": 1571036504512,
+    "version": "1.0.0"
+  }

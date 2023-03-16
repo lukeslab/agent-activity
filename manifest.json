@@ -1,0 +1,19 @@
+{
+  "platform-version": "2.3",
+  "product": {
+    "freshchat": {
+      "events": {
+        "onAgentActivityCreate": {
+          "handler": "onAgentActivityCreateHandler"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "18.14.2",
+    "fdk": "9.0.0"
+  },
+  "dependencies": {
+    "mongoose": "7.0.1"
+  }
+}

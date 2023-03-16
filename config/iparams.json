@@ -1,0 +1,8 @@
+{
+  "mongodb_password": {
+    "display_name": "Mongdb password",
+    "description": "Please enter the contact details",
+    "type": "text",
+    "required": true
+  }
+}

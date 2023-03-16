@@ -1,0 +1,5 @@
+/coverage
+/log
+/server/node_modules
+
+.report.json

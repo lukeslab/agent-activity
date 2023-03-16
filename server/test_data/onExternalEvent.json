@@ -1,0 +1,16 @@
+{
+  "account_id": "12345",
+  "event": "onExternalEvent",
+  "timestamp": 1496400354326,
+  "region": "US",
+  "domain": "https://web.freshchat.com",
+  "data": {
+    "conversation": {
+      "id": 12345,
+      "message": "hello world"
+    }
+  },
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}

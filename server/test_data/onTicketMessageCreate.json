@@ -1,0 +1,37 @@
+{
+  "data": {
+    "ticket_message": {
+      "agent_id": 306,
+      "action_time": 1,
+      "update_date": 1581934639458,
+      "channel": "webchat_channel",
+      "id": 857899565,
+      "content_type": "TEXT",
+      "create_date": 1581934639451,
+      "ticket_note_type": 10,
+      "client_id": 36,
+      "author": "Bot",
+      "message": "Which cinema would you like to go?",
+      "enum_ticket_message_type": "DEFAULT",
+      "manual_chat": false,
+      "node_id": 694,
+      "inferred_message": "Which cinema would you like to go?",
+      "ticket_id": 92322394,
+      "bot_id": 123,
+      "bot_version_id": 123,
+      "file_name": "discussion.pdf"
+    },
+    "actor": { 
+      "id": 1,
+      "type": "bot/agent/contact",
+      "freshid_id": 2 
+    },
+    "associations": {}
+  },
+  "region": "US",
+  "account_id": "112121",
+  "domain": "sample.freshbots.ai",
+  "event": "onTicketMessageCreate",
+  "timestamp": 1564392319214,
+  "version": "2.0.0"
+}

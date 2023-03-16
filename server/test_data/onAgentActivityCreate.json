@@ -1,0 +1,42 @@
+{
+  "data": {
+    "agent_activity": {
+      "status": "AVAILABLE",
+      "emoji": "joy",
+      "availability_event_type": "Intelliassign",
+      "status_change_timestamp": "2022-07-29T06:23:03.081Z",
+      "custom_status_id": "75c23bdd-0e88-f234-417a-d3e2eb14c7bf",
+      "org_agent_id": "374207180722084617",
+      "email": "abc@freshchat.com",
+      "prev_status": "UNAVAILABLE",
+      "prev_status_change_timestamp": "2022-07-29T06:18:21.068Z"
+    },
+    "actor": {
+      "type": "agent",
+      "org_actor_id": "374207180722084617",
+      "sub_entity": "hallway_bot",
+      "id": "98c76ba0-6b38-499b-9c37-e104774276b8",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@gmail.com",
+      "phone": "9876543212",
+      "avatar": {
+        "url": "https://s3.amazonaws.com/fresh-chat-names/img/john_doe.png"
+      },
+      "social_profiles": [
+        {
+          "type": "facebook",
+          "id": "john.doe"
+        }
+      ],
+      "org_contact_id": "1556375110506151936",
+      "login_status": false
+    }
+  },
+  "region": "US",
+  "account_id": "227655214724132",
+  "domain": "web.freshchat.com",
+  "event": "onAgentActivityCreate",
+  "timestamp": 1564392329214,
+  "version": "2.0.0"
+}

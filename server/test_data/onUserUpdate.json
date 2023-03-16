@@ -1,0 +1,47 @@
+{
+  "data": {
+    "user": {
+      "created_time": "2019-07-29T14:51:56.933Z",
+      "id": "b3c2c92e-d650-4c40-bb7d-aeb3423cd4d2",
+      "reference_id": "john.doe.198",
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "john.doe@gmail.com",
+      "phone": "9876543212",
+      "avatar": {
+        "url": "https://s3.amazonaws.com/fresh-chat-names/img/john_doe.png"
+      },
+      "properties": [
+        {
+          "name": "plan",
+          "value": "Estate"
+        }
+      ]
+    },
+    "actor": {
+      "type": "agent",
+      "id": "98c76ba0-6b38-499b-9c37-e104774276b8",
+      "first_name": "Jon",
+      "last_name": "Snow",
+      "email": "jon.snow@freshworks.com",
+      "avatar": {
+        "url": "https://s3.amazonaws.com/fresh-chat-names/img/jon_snow.png"
+      }
+    },
+    "associations": {},
+    "changes": {
+      "model_changes": {
+        "first_name": [
+          "Dancing  Wayfarer",
+          "John"
+        ]
+      }
+    }
+  },
+  "region": "US",
+  "account_id": "235086843748457",
+  "domain": "web.freshchat.com",
+  "event": "onUserUpdate",
+  "timestamp": 1571040876177,
+  "version": "1.0.0"
+}
