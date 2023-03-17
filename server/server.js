@@ -3,8 +3,8 @@ var client;
 const mongoose = require('mongoose')
 // mongoose.connect(`mongodb+srv://luke:${client.iparams.get("mongodb_password")}@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority`)
 const connectDB = async () => {
-  try{
-    await mongoose.connect("mongodb+srv://luke:R15hGsl33gDNI0FY@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority")
+  try {
+    await mongoose.connect("mongodb+srv://luke:R15hGsl33gDNI0FY@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority") // I know this is leaked, it won't be used in prod.
   } catch (error) {
     console.error(error)
   }
@@ -22,7 +22,7 @@ const agentSchema = new Schema({
 exports = {
   onAgentActivityCreateHandler: async function (payload) {
     if (mongoose.connection.readyState !== 1){
-      console.log('ReadyState Change. Reconnecting to db.')
+      console.log('ReadyState changed. Reconnecting to db.')
       await connectDB()
     
       mongoose.connection.once('open', () => {
