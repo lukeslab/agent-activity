@@ -1,5 +1,5 @@
 /coverage
 /log
 /server/node_modules
-
+/dist
 .report.json
