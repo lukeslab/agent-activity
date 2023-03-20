@@ -1,10 +1,8 @@
-var client;
-
 const mongoose = require('mongoose')
-// mongoose.connect(`mongodb+srv://luke:${client.iparams.get("mongodb_password")}@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority`)
-const connectDB = async () => {
+const connectDB = async (password) => {
   try {
-    await mongoose.connect("mongodb+srv://luke:R15hGsl33gDNI0FY@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority") // I know this is leaked, it won't be used in prod.
+    // Password is available in callback function payload object
+    await mongoose.connect(`mongodb+srv://luke:${password}@cluster0.320uhjy.mongodb.net/?retryWrites=true&w=majority`) 
   } catch (error) {
     console.error(error)
   }
@@ -21,9 +19,10 @@ const agentSchema = new Schema({
 
 exports = {
   onAgentActivityCreateHandler: async function (payload) {
+
     if (mongoose.connection.readyState !== 1){
       console.log('ReadyState changed. Reconnecting to db.')
-      await connectDB()
+      await connectDB(payload.iparams.mongodb_password)
     
       mongoose.connection.once('open', () => {
         console.log('Connected to mongodb')
@@ -35,7 +34,7 @@ exports = {
     const agent = await Agent.findOne({ chatId: payload.data.actor.id })
 
     if(agent) {
-      console.log('agent found')
+      console.log(`Agent ${agent.firstName} ${agent.lastName} (${agent.chatId}) found, updating history.`)
       return Agent.updateOne(
         {
           chatId: payload.data.actor.id
@@ -51,10 +50,14 @@ exports = {
         }
       )
     } else {
-      console.log('agent not found, creating document.')
+      const id = payload.data.actor.id;
+      const firstName = payload.data.actor.firstName;
+      const lastName = payload.data.actor.lastName;
+      console.log(`Agent not found, creating document for Agent ${firstName} ${lastName} (${id}).`)
+
       return Agent.create({
-        chatId: payload.data.actor.id,
-        firstName: payload.data.actor.first_name,
+        chatId: id,
+        firstName: firstName,
         lastName: payload.data.actor.last_name,
         history: [{
           status: payload.data.agent_activity.status,
