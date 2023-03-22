@@ -2,4 +2,5 @@
 /log
 /server/node_modules
 /dist
+test_password.txt
 .report.json
