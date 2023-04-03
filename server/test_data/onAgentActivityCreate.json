@@ -1,7 +1,7 @@
 {
   "data": {
     "agent_activity": {
-      "status": "AVAILABLE",
+      "status": "UNAVAILABLE",
       "emoji": "joy",
       "availability_event_type": "Intelliassign",
       "status_change_timestamp": "2022-07-29T06:23:03.081Z",
@@ -37,6 +37,6 @@
   "account_id": "227655214724132",
   "domain": "web.freshchat.com",
   "event": "onAgentActivityCreate",
-  "timestamp": 1564392329214,
+  "timestamp": 1564592339214,
   "version": "2.0.0"
 }
