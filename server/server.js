@@ -35,8 +35,12 @@ exports = {
       }, 
       timestamp
     } = payload
+    
+    // The timestamp is sent with 3 decimal places in the payload and so is converted to seconds. If Freshworks eventually updates the payload to provide milliseconds or continues leaves it as seconds, this check will make sure it is in milliseconds.
+    const timestampInMilliseconds = Number.isInteger(timestamp) ? timestamp : timestamp * 1000;
+
     // get the year, month, and day from payload timestamp
-    const date = new Date(timestamp*1000)
+    const date = new Date(timestampInMilliseconds)
     const year = date.getFullYear()
     const month = date.getMonth()
     const day = date.getDate() // this returns the day of the month
@@ -80,7 +84,7 @@ exports = {
           ...history[year][month][day]['activity'],
           {
             status,
-            timestamp
+            timestamp: timestampInMilliseconds
           }
         ]
         console.log(year, month, day, history)
@@ -104,7 +108,7 @@ exports = {
         history[year][month][day] = {}
         history[year][month][day]['activity'] = [{
           status,
-          timestamp
+          timestamp: timestampInMilliseconds
         }] 
 
         return await Agent.create({
