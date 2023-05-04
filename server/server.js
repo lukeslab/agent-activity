@@ -11,8 +11,8 @@ const connectDB = async ( password ) => {
 const { Schema } = mongoose
 const agentSchema = new Schema({
   chatId: String,
-  firstName: String,
-  lastName: String,
+  first_name: String,
+  last_name: String,
   history: {},
   avatar: String,
 })  
@@ -38,20 +38,16 @@ exports = {
     
     // The timestamp is sent with 3 decimal places in the payload and so is converted to seconds. If Freshworks eventually updates the payload to provide milliseconds or continues leaves it as seconds, this check will make sure it is in milliseconds.
     const timestampInMilliseconds = Number.isInteger(timestamp) ? timestamp : timestamp * 1000;
-
-    // get the year, month, and day from payload timestamp
+    
+    // Get the year, month, and day from payload timestamp. Their servers are in Indian Standard Time. This causes an issue on the front end, since the shifts sometimes carry over to the next day depending on our agents timezone.
     const date = new Date(timestampInMilliseconds)
     const year = date.getFullYear()
-    const month = date.getMonth()
-    const day = date.getDate() // this returns the day of the month
+    const month = date.getMonth() + 1 // Month returns an index, so 0 is January. Add 1 so 1 is Jan.
+    const day = date.getDate() // This is day of the month, not a formatted date.
 
-    // exit if not intelliassign
-    if(availability_event_type !== "Intelliassign") {
-      console.log(`Event type is ${availability_event_type}. Event type is not intelliassign, exiting.`)
-      return
-    }
+    console.log('Server time: ', timestampInMilliseconds, date.toString())
 
-    // check db connection
+    // Check db connection
     if (mongoose.connection.readyState !== 1){
       console.log('ReadyState changed. Reconnecting to db.')
       await connectDB(payload.iparams.mongodb_password)
@@ -62,18 +58,24 @@ exports = {
       mongoose.connection.on('error', console.error.bind(console, "connection error: "))
     }
     
-    // establish db model
+    // Establish mongodb model
     const Agent = mongoose.models.Agent || mongoose.model('Agent', agentSchema)
-
 
     try {
       const agent = await Agent.findOne({ chatId: id })
       
       // if agent already has a record, update it.
-      if(agent) {
+      if (agent) {
+        const updateData = {
+          status,
+          timestamp: timestampInMilliseconds,
+          availability_event_type
+        }
+        console.log(`Agent ${first_name} ${last_name} (${id}) found. Updating history:`, updateData)
+
         const history = agent.history
         
-        //Check that the history has the year, month, day, and activity property for the given date.
+        // Check that the history has the year, month, day, and activity property for the given date.
         if(!history.hasOwnProperty(year)) history[year] ={}
         if(!history[year].hasOwnProperty(month)) history[year][month] = {}
         if(!history[year][month].hasOwnProperty(day)) history[year][month][day] = {}
@@ -82,24 +84,14 @@ exports = {
         // Update the activity property for the given date
         history[year][month][day]['activity'] = [
           ...history[year][month][day]['activity'],
-          {
-            status,
-            timestamp: timestampInMilliseconds
-          }
+          updateData
         ]
-        console.log(year, month, day, history)
-        console.log(`Agent ${agent.firstName} ${agent.lastName} (${agent.chatId}) found, updating history.`)
-        return Agent.updateOne(
-          {
-            chatId: id
-          },
-          {
-            history
-          }
-        )
+        
+        return await Agent.updateOne({ chatId: id }, { history })
+        
       } else {
         // If no agent is found, use payload data to create a document for the agent.
-        console.log(`Agent not found, creating document for Agent ${first_name} ${last_name} (${id}).`)
+        console.log(`Agent not found. Creating document for Agent ${first_name} ${last_name} (${id}).`)
 
         // Initialize history object
         const history = {}
@@ -108,17 +100,17 @@ exports = {
         history[year][month][day] = {}
         history[year][month][day]['activity'] = [{
           status,
-          timestamp: timestampInMilliseconds
+          timestamp: timestampInMilliseconds,
+          availability_event_type
         }] 
 
         return await Agent.create({
           chatId: id,
-          firstName: first_name,
-          lastName: last_name,
+          first_name,
+          last_name,
           history,
           avatar: url
         })
-          .then( data => console.log('Agent activity recorded successfully', data) )
       }
     } catch (error) {
       console.log(`An Error occured: ${error}.`)
